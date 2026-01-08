@@ -2,7 +2,8 @@
 
 👉 https://macvswindows.netlify.app/
 
-## 🔍 Overview
+## 🔍 Overvie.
+https://upload.wikimedia.org/wikipedia/commons/c/c9/Finder_Icon_macOS_Big_Sur.png
 
 **Window_Macos-wed** เป็นเว็บแอปหน้าเลือกระบบปฏิบัติการ  
 ให้ผู้ใช้งานเลือกว่าจะดูเนื้อหา (หรือเข้าสู่ระบบ) แบบ **Windows** หรือ **Mac OS**  
