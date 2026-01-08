@@ -28,4 +28,4 @@
 
 1. Clone โปรเจกต์นี้:
    ```bash
-   git clone https://github.com/<your-username>/<your-repo>.git
+   git clone https://github.com/jikkhg/Window_Macos-wed
