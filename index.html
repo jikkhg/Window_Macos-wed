@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Operating System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://cdn.jim-nielsen.com/macos/1024/finder-2025-11-13.png?rf=1024">
+    <style>
+        body { background: #000; margin: 0; padding: 0; overflow: hidden; }
+    </style>
+</head>
+<body>
+    <div id="boot-screen" class="boot-screen" style="opacity: 1; visibility: visible;">
+        <div class="boot-title">Choose your system</div>
+        <div class="boot-container">
+            <!-- Windows Option -->
+            <div class="boot-option" onclick="window.location.href='win.html'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Windows_logo_-_2021.svg" alt="Windows" class="boot-icon">
+                <span class="boot-name">Windows 11</span>
+            </div>
+            <!-- Mac Option -->
+            <div class="boot-option" onclick="window.location.href='macos.html'">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/finder-2025-11-13.png?rf=1024" alt="Max OS 2" class="boot-icon">
+                <span class="boot-name">Max OS 2</span>
+            </div>
+        </div>
+        <div class="boot-footer">Use mouse or touch to select your operating system</div>
+    </div>
+</body>
+</html>

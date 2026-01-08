@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max OS 2</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://cdn.jim-nielsen.com/macos/1024/finder-2025-11-13.png?rf=1024">
+    <style>
+        /* Force show desktop immediately in this separated version */
+        #boot-screen { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="menu-bar">
+        <div class="menu-left">
+            <div class="menu-item" onclick="window.toggleMenu(event, 'apple-menu')">
+                <img src="max_os_2_logo.png" alt="Max OS 2 Logo" style="width: 18px; height: 18px; border-radius: 4px;">
+                <div id="apple-menu" class="menu-dropdown">
+                    <div class="dropdown-item" onclick="window.openWindow('about')">About This Max</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item">System Settings...</div>
+                    <div class="dropdown-item">App Store...</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item">Recent Items</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item">Force Quit...</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item" onclick="window.location.href='index.html'">Shut Down... (Back to Boot)</div>
+                    <div class="dropdown-item" onclick="location.reload()">Restart...</div>
+                </div>
+            </div>
+            <div class="menu-item" onclick="window.toggleMenu(event, 'app-menu')">
+                <span style="font-weight: 700;">Max OS 2</span>
+                <div id="app-menu" class="menu-dropdown">
+                    <div class="dropdown-item">About Max OS 2</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item">Hide Max OS 2</div>
+                    <div class="dropdown-item">Hide Others</div>
+                    <div class="dropdown-item">Show All</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item">Quit Max OS 2</div>
+                </div>
+            </div>
+            <div class="menu-item" onclick="window.toggleMenu(event, 'file-menu')">
+                <span>File</span>
+                <div id="file-menu" class="menu-dropdown">
+                    <div class="dropdown-item">New Window</div>
+                    <div class="dropdown-item">New Tab</div>
+                    <div class="dropdown-item">Open...</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item">Close Window</div>
+                </div>
+            </div>
+            <div class="menu-item" onclick="window.toggleMenu(event, 'edit-menu')">
+                <span>Edit</span>
+                <div id="edit-menu" class="menu-dropdown">
+                    <div class="dropdown-item">Undo</div>
+                    <div class="dropdown-item">Redo</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item">Cut</div>
+                    <div class="dropdown-item">Copy</div>
+                    <div class="dropdown-item">Paste</div>
+                </div>
+            </div>
+            <div class="menu-item" onclick="window.toggleMenu(event, 'view-menu')">
+                <span>View</span>
+                <div id="view-menu" class="menu-dropdown">
+                    <div class="dropdown-item">Enter Full Screen</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item">Show Tool Bar</div>
+                    <div class="dropdown-item">Customize Tool Bar...</div>
+                </div>
+            </div>
+            <div class="menu-item" onclick="window.toggleMenu(event, 'go-menu')">
+                <span>Go</span>
+                <div id="go-menu" class="menu-dropdown">
+                    <div class="dropdown-item">Back</div>
+                    <div class="dropdown-item">Forward</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item">Enclosing Folder</div>
+                    <div class="dropdown-item">Desktop</div>
+                    <div class="dropdown-item">Documents</div>
+                </div>
+            </div>
+            <div class="menu-item" onclick="window.toggleMenu(event, 'window-menu')">
+                <span>Window</span>
+                <div id="window-menu" class="menu-dropdown">
+                    <div class="dropdown-item">Minimize</div>
+                    <div class="dropdown-item">Zoom</div>
+                    <div class="dropdown-separator"></div>
+                    <div class="dropdown-item">Bring All to Front</div>
+                    <div class="dropdown-item" onclick="window.open('https://www.macos-web.app/assets/46-CWFDSoca.webp')">nay x ninekigean</div>
+                </div>
+            </div>
+            <div class="menu-item" onclick="window.toggleMenu(event, 'help-menu')">
+                <span>Help</span>
+                <div id="help-menu" class="menu-dropdown">
+                    <div class="dropdown-item">Search</div>
+                    <div class="dropdown-item">Max OS 2 Help</div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-right">
+            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg></span>
+            <span onclick="window.toggleControlCenter()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="6" width="18" height="5" rx="2.5"></rect>
+                    <circle cx="7.5" cy="8.5" r="1" fill="currentColor"></circle>
+                    <rect x="3" y="14" width="18" height="5" rx="2.5"></rect>
+                    <circle cx="16.5" cy="16.5" r="1" fill="currentColor"></circle>
+                </svg>
+            </span>
+            <span id="clock" style="font-feature-settings: 'tnum'; margin-left: 8px;">12:00 PM</span>
+        </div>
+    </div>
+
+    <div class="desktop">
+        <!-- Windows will be generated dynamically by script.js -->
+    </div>
+
+    <div class="notification" id="notif">
+        <div style="font-weight: 600; margin-bottom: 5px;">System Message</div>
+        <div id="notif-text" style="font-size: 13px; color: rgba(255,255,255,0.8);">Neural Link Established.</div>
+    </div>
+
+    <div id="launchpad" class="launchpad-overlay" onclick="window.toggleLaunchpad(false)">
+        <div class="launchpad-search-container" onclick="event.stopPropagation()">
+            <input type="text" class="launchpad-search" placeholder="Search">
+        </div>
+        <div class="launchpad-grid" onclick="event.stopPropagation()">
+            <!-- Apps will be injected by script.js or manually defined here -->
+            <div class="launchpad-app" onclick="window.openWindow('appstore')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/app-store-2025-11-13.png?rf=1024" alt="App Store">
+                <span>App Store</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('calendar')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/calendar-2025-11-13.png?rf=1024" alt="Calendar">
+                <span>Calendar</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('contacts')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/contacts-2025-11-13.png?rf=1024" alt="Contacts">
+                <span>Contacts</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('reminders')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/reminders-2025-11-13.png?rf=1024" alt="Reminders">
+                <span>Reminders</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('safari')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Safari_browser_logo.svg" alt="Safari">
+                <span>Safari</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('messages')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/messages-2025-11-13.png?rf=1024" alt="Messages">
+                <span>Messages</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('music')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/music-2025-11-13.png?rf=1024" alt="Music">
+                <span>Music</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('photos')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/photos-2025-11-13.png?rf=1024" alt="Photos">
+                <span>Photos</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('maps')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/maps-2025-11-13.png?rf=1024" alt="Maps">
+                <span>Maps</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('note')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/notes-2025-11-13.png?rf=1024" alt="Notes">
+                <span>Notes</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('calc')">
+                <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/cc91da03a5ce500fd4bafdade2d9f2b0_low_res_Calculator.png" alt="Calculator">
+                <span>Calculator</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('terminal')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/terminal-2025-11-13.png?rf=1024" alt="Terminal">
+                <span>Terminal</span>
+            </div>
+            <div class="launchpad-app" onclick="window.openWindow('about')">
+                <img src="https://cdn.jim-nielsen.com/macos/1024/system-settings-2025-11-14.png?rf=1024" alt="Settings">
+                <span>Settings</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="dock-trigger"></div>
+    <div class="dock-container">
+        <div class="dock-icon" id="dock-finder" data-tooltip="Finder" onclick="window.openWindow('finder')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Finder_Icon_macOS_Big_Sur.png" alt="Finder">
+        </div>
+        <div class="dock-icon" id="dock-launchpad" data-tooltip="Launchpad" onclick="window.toggleLaunchpad(true)">
+            <img src="https://cdn.jim-nielsen.com/macos/1024/launchpad-2025-11-13.png?rf=1024" alt="Launchpad">
+        </div>
+        <div class="dock-icon" id="dock-appstore" data-tooltip="App Store" onclick="window.openWindow('appstore')">
+            <img src="https://cdn.jim-nielsen.com/macos/1024/app-store-2025-11-13.png?rf=1024" alt="App Store">
+        </div>
+        <div class="dock-icon" id="dock-messages" data-tooltip="Messages" onclick="window.openWindow('messages')">
+            <img src="https://cdn.jim-nielsen.com/macos/1024/messages-2025-11-13.png?rf=1024" alt="Messages">
+        </div>
+        <div class="dock-icon" id="dock-music" data-tooltip="Music" onclick="window.openWindow('music')">
+            <img src="https://cdn.jim-nielsen.com/macos/1024/music-2025-11-13.png?rf=1024" alt="Music">
+        </div>
+        <div class="dock-icon" id="dock-vscode" data-tooltip="Visual Studio Code" onclick="window.openWindow('vscode')">
+            <img src="https://cdn.worldvectorlogo.com/logos/visual-studio-code-1.svg" alt="VS Code">
+        </div>
+        <div class="dock-icon" id="dock-mail" data-tooltip="Mail" onclick="window.openWindow('mail')">
+            <img src="https://cdn.jim-nielsen.com/macos/1024/mail-2025-11-13.png?rf=1024" alt="Mail">
+        </div>
+        <div class="dock-icon" id="dock-photos" data-tooltip="Photos" onclick="window.openWindow('photos')">
+            <img src="https://cdn.jim-nielsen.com/macos/1024/photos-2025-11-13.png?rf=1024" alt="Photos">
+        </div>
+        <div class="dock-icon" id="dock-maps" data-tooltip="Maps" onclick="window.openWindow('maps')">
+            <img src="https://cdn.jim-nielsen.com/macos/1024/maps-2025-11-13.png?rf=1024" alt="Maps">
+        </div>
+        <div class="dock-icon" id="dock-calc" data-tooltip="Calculator" onclick="window.openWindow('calc')">
+            <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/cc91da03a5ce500fd4bafdade2d9f2b0_low_res_Calculator.png" alt="Calculator">
+        </div>
+        <div class="dock-icon" id="dock-note" data-tooltip="Notes" onclick="window.openWindow('note')">
+            <img src="https://cdn.jim-nielsen.com/macos/1024/notes-2025-11-13.png?rf=1024" alt="Notes">
+        </div>
+        <div class="dock-icon" id="dock-terminal" data-tooltip="Terminal" onclick="window.openWindow('terminal')">
+            <img src="https://cdn.jim-nielsen.com/macos/1024/terminal-2025-11-13.png?rf=1024" alt="Terminal">
+        </div>
+        <div class="dock-icon" id="dock-about" data-tooltip="System Settings" onclick="window.openWindow('about')">
+            <img src="https://cdn.jim-nielsen.com/macos/1024/system-settings-2025-11-14.png?rf=1024" alt="Settings">
+        </div>
+
+        <div class="dock-separator"></div>
+
+        <div class="dock-icon" id="dock-trash" data-tooltip="Trash">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Trash_Icon_macOS_Big_Sur.png/1024px-Trash_Icon_macOS_Big_Sur.png" alt="Trash">
+        </div>
+    </div>
+
+    <div id="restart-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 2147483647; visibility: hidden; opacity: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: opacity 1s ease, visibility 1s; pointer-events: none;">
+        <img src="max_os_2_logo.png" alt="Max OS 2 Logo" style="width: 120px; height: 120px; margin-bottom: 40px; filter: drop-shadow(0 0 20px rgba(0,122,255,0.4));">
+        <div class="progress-container" style="width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden;">
+            <div id="restart-progress" style="width: 0%; height: 100%; background: white; transition: width 0.1s linear;"></div>
+        </div>
+        <div style="margin-top: 20px; font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 300;">Installing Max OS 2.0 Update...</div>
+    </div>
+
+    <div id="control-center" class="control-center">
+        <div class="cc-grid-2">
+            <div class="cc-card active" onclick="window.toggleDarkMode()">
+                <div class="cc-icon-circle">🌓</div>
+                <span class="cc-card-title">Dark mode</span>
+            </div>
+            <div class="cc-card active" onclick="window.toggleAnimations()">
+                <div class="cc-icon-circle">✨</div>
+                <span class="cc-card-title">Animations</span>
+            </div>
+        </div>
+
+        <div class="cc-card cc-full-card">
+            <span class="cc-card-title" style="margin-bottom: 8px;">System Color</span>
+            <div class="cc-color-row">
+                <div class="cc-color-circle active" style="background: #ff9f0a;" onclick="window.setAccentColor('#ff9f0a', this)"></div>
+                <div class="cc-color-circle" style="background: #32d74b;" onclick="window.setAccentColor('#32d74b', this)"></div>
+                <div class="cc-color-circle" style="background: #5ac8fa;" onclick="window.setAccentColor('#5ac8fa', this)"></div>
+                <div class="cc-color-circle" style="background: #007aff;" onclick="window.setAccentColor('#007aff', this)"></div>
+                <div class="cc-color-circle" style="background: #5856d6;" onclick="window.setAccentColor('#5856d6', this)"></div>
+                <div class="cc-color-circle" style="background: #af52de;" onclick="window.setAccentColor('#af52de', this)"></div>
+                <div class="cc-color-circle" style="background: #ff2d55;" onclick="window.setAccentColor('#ff2d55', this)"></div>
+            </div>
+        </div>
+
+        <div class="cc-wallpaper-preview" onclick="window.openWindow('about')">
+            <img src="https://512pixels.net/wp-content/uploads/2025/06/12-Dark-thumbnail.jpg" class="cc-wallpaper-img" alt="Wallpaper">
+            <div class="cc-wallpaper-info">
+                <span class="cc-wallpaper-name">Ventura</span>
+                <span class="cc-wallpaper-sub">Dynamic Wallpaper</span>
+            </div>
+        </div>
+
+        <div class="cc-notch-toggle">
+            <span class="cc-card-title">Notch</span>
+            <div class="toggle-switch" onclick="window.toggleNotch()"></div>
+        </div>
+    </div>
+
+    <div id="notch" style="position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 200px; height: 30px; background: black; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; z-index: 2000; display: none;"></div>
+
+    <div id="context-menu" class="context-menu"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

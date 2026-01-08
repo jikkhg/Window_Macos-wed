@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows 11</title>
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Kanit', sans-serif; margin: 0; overflow: hidden; }
+        .window-shadow { box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .glass { background: rgba(248, 249, 250, 0.8); backdrop-filter: blur(30px) saturate(150%); }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- Simplified Lucide Wrapper for React via CDN ---
+        const Icon = ({ name, size = 18, className = "" }) => {
+            const iconRef = useRef(null);
+            useEffect(() => {
+                if (iconRef.current) {
+                    lucide.createIcons({
+                        targets: [iconRef.current],
+                        icons: lucide.icons
+                    });
+                }
+            }, [name]);
+            return <i data-lucide={name.toLowerCase()} style={{width: size, height: size}} className={className} ref={iconRef}></i>;
+        };
+
+        const icons = {
+            edge: "https://upload.wikimedia.org/wikipedia/commons/9/98/Microsoft_Edge_logo_%282019%29.svg",
+            explorer: "https://img.icons8.com/?size=100&id=FxJPExPJFHZ9&format=png&color=000000",
+            settings: "https://img.icons8.com/?size=100&id=s5NUIabJrb4C&format=png&color=000000",
+            store: "https://img.icons8.com/?size=100&id=P0xhuRBy8MnO&format=png&color=000000",
+            terminal: "https://img.icons8.com/?size=100&id=WbRVMGxHh74X&format=png&color=000000",
+            thispc: "https://img.icons8.com/?size=100&id=vfLlLKzofS1u&format=png&color=000000",
+            recycle: "https://img.icons8.com/?size=100&id=Xn5vYpN70eY3&format=png&color=000000",
+            windows: "https://upload.wikimedia.org/wikipedia/commons/8/87/Windows_logo_-_2021.svg",
+            admin: "https://img.icons8.com/?size=100&id=NqZQc8ORlO2Z&format=png&color=000000"
+        };
+
+        const storeApps = [
+            { name: 'Discord', icon: 'https://upload.wikimedia.org/wikipedia/commons/7/73/Discord_Color_Logo.svg', category: 'Social', rating: 4.7 },
+            { name: 'Zoom', icon: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Zoom-Logo.png', category: 'Business', rating: 4.5 },
+            { name: 'Spotify', icon: 'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg', category: 'Music', rating: 4.8 },
+            { name: 'Netflix', icon: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg', category: 'Entertainment', rating: 4.4 },
+            { name: 'Instagram', icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg', category: 'Social', rating: 4.6 },
+            { name: 'VS Code', icon: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg', category: 'Development', rating: 4.9 },
+        ];
+
+        const App = () => {
+            const [currentTime, setCurrentTime] = useState(new Date());
+            const [isStartOpen, setIsStartOpen] = useState(false);
+            const [openWindows, setOpenWindows] = useState([]);
+            const [activeWindow, setActiveWindow] = useState(null);
+            const [zIndex, setZIndex] = useState(10);
+
+            useEffect(() => {
+                const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+                return () => clearInterval(timer);
+            }, []);
+
+            const appData = {
+                edge: { id: 'edge', name: 'Microsoft Edge', icon: icons.edge, content: <BrowserContent /> },
+                explorer: { id: 'explorer', name: 'File Explorer', icon: icons.explorer, content: <ExplorerContent /> },
+                settings: { id: 'settings', name: 'Settings', icon: icons.settings, content: <SettingsContent /> },
+                terminal: { id: 'terminal', name: 'Terminal', icon: icons.terminal, content: <TerminalContent /> },
+                store: { id: 'store', name: 'Store', icon: icons.store, content: <StoreContent /> },
+            };
+
+            const openApp = (id) => {
+                if (!openWindows.find(win => win.id === id)) {
+                    const newWindow = { ...appData[id], zIndex: zIndex + 1 };
+                    setOpenWindows([...openWindows, newWindow]);
+                    setZIndex(zIndex + 1);
+                    setActiveWindow(id);
+                } else {
+                    focusWindow(id);
+                }
+                setIsStartOpen(false);
+            };
+
+            const closeWindow = (id) => {
+                setOpenWindows(openWindows.filter(win => win.id !== id));
+                if (activeWindow === id) setActiveWindow(null);
+            };
+
+            const focusWindow = (id) => {
+                setOpenWindows(openWindows.map(win => win.id === id ? { ...win, zIndex: zIndex + 1 } : win));
+                setZIndex(zIndex + 1);
+                setActiveWindow(id);
+            };
+
+            return (
+                <div 
+                    className="fixed inset-0 w-full h-full bg-[#1a1a1a] bg-cover bg-center overflow-hidden flex flex-col"
+                    style={{ backgroundImage: `url('https://4kwallpapers.com/images/walls/thumbs_3t/5616.jpg')` }}
+                    onClick={() => setIsStartOpen(false)}
+                >
+                    <div className="flex-1 relative">
+                        <div className="p-4 grid grid-rows-6 grid-flow-col gap-4 w-fit h-full">
+                            <DesktopIcon img={icons.thispc} label="This PC" onClick={() => openApp('explorer')} />
+                            <DesktopIcon img={icons.recycle} label="Recycle Bin" />
+                            <DesktopIcon img={icons.edge} label="Microsoft Edge" onClick={() => openApp('edge')} />
+                            <DesktopIcon img={icons.store} label="Store" onClick={() => openApp('store')} />
+                        </div>
+
+                        {openWindows.map(win => (
+                            <Window 
+                                key={win.id} 
+                                window={win} 
+                                isActive={activeWindow === win.id}
+                                onClose={() => closeWindow(win.id)}
+                                onFocus={() => focusWindow(win.id)}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Taskbar */}
+                    <div className="h-[52px] glass border-t border-white/20 flex items-center justify-between px-2 z-[6000] shadow-lg">
+                        <div className="flex-1 flex items-center gap-2 px-3">
+                            <div className="hover:bg-white/50 px-2 py-1 rounded-md cursor-pointer flex items-center gap-2">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png" className="w-5 h-5" />
+                                <div className="flex flex-col text-[10px] leading-tight">
+                                    <span className="font-bold">Mostly Clear</span>
+                                    <span>28°C</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-1.5 h-full pb-1">
+                            <div onClick={(e) => { e.stopPropagation(); setIsStartOpen(!isStartOpen); }} className="p-2 hover:bg-white/60 rounded-md transition-all cursor-pointer">
+                                <img src={icons.windows} className="w-6 h-6" />
+                            </div>
+                            {Object.values(appData).map(app => (
+                                <div key={app.id} onClick={() => openApp(app.id)} className={`relative p-2 rounded-md hover:bg-white/60 cursor-pointer ${activeWindow === app.id ? 'bg-white/50' : ''}`}>
+                                    <img src={app.icon} className="w-6 h-6" />
+                                    {openWindows.some(win => win.id === app.id) && (
+                                        <div className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 h-[3px] rounded-full ${activeWindow === app.id ? 'bg-blue-500 w-4' : 'bg-gray-400 w-1.5'}`}></div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="flex-1 flex justify-end items-center gap-4 pr-3">
+                            <div className="flex items-center gap-3">
+                                <Icon name="wifi" size={16} />
+                                <Icon name="volume-2" size={16} />
+                                <Icon name="battery" size={16} />
+                            </div>
+                            <div className="text-right text-[11px]">
+                                <div className="font-bold">{currentTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                                <div>{currentTime.toLocaleDateString()}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {isStartOpen && (
+                        <div className="fixed bottom-[60px] left-1/2 -translate-x-1/2 w-[520px] glass rounded-xl shadow-2xl border border-white/40 z-[5000] p-8 animate-in slide-in-from-bottom-4 duration-200" onClick={e => e.stopPropagation()}>
+                            <input type="text" placeholder="Type here to search" className="w-full bg-white border border-gray-200 rounded-full px-4 py-2 text-sm outline-none mb-8" />
+                            <div className="grid grid-cols-6 gap-y-6">
+                                {Object.values(appData).map(app => (
+                                    <div key={app.id} onClick={() => openApp(app.id)} className="flex flex-col items-center gap-2 cursor-pointer hover:bg-white/50 p-2 rounded-lg">
+                                        <img src={app.icon} className="w-8 h-8" />
+                                        <span className="text-[10px]">{app.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="mt-8 pt-6 border-t border-gray-200 flex justify-between items-center">
+                                <div className="flex items-center gap-3">
+                                    <img src={icons.admin} className="w-8 h-8" />
+                                    <span className="text-xs font-bold">Administrator</span>
+                                </div>
+                                <div className="p-2 hover:bg-white/50 rounded-lg cursor-pointer" onClick={() => window.location.href='index.html'}>
+                                    <Icon name="power" size={18} />
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const Window = ({ window, onClose, onFocus, isActive }) => {
+            const [pos, setPos] = useState({ x: 100, y: 50 });
+            return (
+                <div 
+                    className={`fixed flex flex-col bg-white rounded-xl overflow-hidden window-shadow border border-gray-200/50 ${isActive ? 'ring-1 ring-blue-500/20' : ''}`}
+                    style={{ top: pos.y, left: pos.x, width: '80%', height: '70%', zIndex: window.zIndex }}
+                    onClick={onFocus}
+                >
+                    <div className="h-10 flex items-center justify-between px-3 bg-[#f8f9fa] shrink-0">
+                        <div className="flex items-center gap-2">
+                            <img src={window.icon} className="w-4 h-4" />
+                            <span className="text-[11px] font-bold text-gray-500 uppercase">{window.name}</span>
+                        </div>
+                        <div className="flex h-full items-center">
+                            <div className="w-10 h-full flex items-center justify-center hover:bg-black/5"><Icon name="minus" size={14} /></div>
+                            <div className="w-10 h-full flex items-center justify-center hover:bg-black/5"><Icon name="maximize-2" size={12} /></div>
+                            <div onClick={(e) => { e.stopPropagation(); onClose(); }} className="w-10 h-full flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors"><Icon name="x" size={16} /></div>
+                        </div>
+                    </div>
+                    <div className="flex-1 overflow-hidden">{window.content}</div>
+                </div>
+            );
+        };
+
+        const BrowserContent = () => (
+            <div className="h-full flex flex-col bg-white">
+                <div className="bg-[#f3f3f3] p-2 border-b flex items-center gap-3">
+                    <div className="flex gap-2 ml-2">
+                        <Icon name="arrow-left" size={14} />
+                        <Icon name="arrow-right" size={14} />
+                        <Icon name="rotate-cw" size={14} />
+                    </div>
+                    <div className="flex-1 bg-white border rounded-full px-3 py-1 text-xs flex items-center gap-2">
+                        <Icon name="lock" size={10} className="text-green-600" />
+                        <span>https://www.google.com</span>
+                    </div>
+                </div>
+                <iframe src="https://www.bing.com" className="flex-1 border-none"></iframe>
+            </div>
+        );
+
+        const ExplorerContent = () => (
+            <div className="h-full flex bg-white">
+                <div className="w-48 bg-[#f9fafb] border-r border-gray-100 p-4">
+                    <div className="text-[10px] font-bold text-gray-400 uppercase mb-4">Quick Access</div>
+                    <div className="text-xs p-2 hover:bg-gray-200 rounded-lg cursor-pointer mb-1">🏠 Home</div>
+                    <div className="text-xs p-2 hover:bg-gray-200 rounded-lg cursor-pointer mb-1">📄 Documents</div>
+                    <div className="text-xs p-2 hover:bg-gray-200 rounded-lg cursor-pointer mb-1">⬇️ Downloads</div>
+                </div>
+                <div className="flex-1 p-8 grid grid-cols-4 gap-8 content-start">
+                    {['Projects', 'Work', 'School', 'Photos'].map(name => (
+                        <div key={name} className="flex flex-col items-center gap-2 p-4 hover:bg-gray-50 rounded-xl cursor-not-allowed">
+                            <img src={icons.explorer} className="w-12 h-12" />
+                            <span className="text-xs font-medium">{name}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const SettingsContent = () => (
+            <div className="h-full flex bg-[#f8f9fa] p-8">
+                <div className="max-w-4xl mx-auto w-full">
+                    <h2 className="text-2xl font-bold mb-8">Settings</h2>
+                    <div className="grid gap-4">
+                        {['System', 'Bluetooth & devices', 'Network & internet', 'Personalization', 'Apps', 'Accounts'].map(opt => (
+                            <div key={opt} className="p-4 bg-white border border-gray-100 rounded-xl flex items-center justify-between hover:bg-gray-50 cursor-pointer">
+                                <span className="font-medium">{opt}</span>
+                                <Icon name="chevron-right" size={16} className="text-gray-400" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+
+        const TerminalContent = () => (
+            <div className="h-full bg-[#0c0c0c] text-green-400 font-mono p-6 text-sm">
+                <div>Microsoft Windows [Version 10.0.22631.3296]</div>
+                <div className="mt-4">PS C:\Users\Administrator> <span className="animate-pulse">|</span></div>
+            </div>
+        );
+
+        const StoreContent = () => (
+            <div className="h-full bg-white p-8 overflow-y-auto">
+                <h1 className="text-3xl font-bold mb-12 text-center">Microsoft Store</h1>
+                <div className="grid grid-cols-3 gap-6">
+                    {storeApps.map(app => (
+                        <div key={app.name} className="p-6 bg-[#f9f9fb] rounded-2xl border border-transparent hover:border-blue-100 hover:shadow-xl transition-all cursor-pointer flex items-center gap-4">
+                            <img src={app.icon} className="w-12 h-12 object-contain" />
+                            <div>
+                                <div className="font-bold text-sm">{app.name}</div>
+                                <div className="text-[10px] text-gray-400 uppercase font-bold">{app.category}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const DesktopIcon = ({ img, label, onClick }) => (
+            <div className="flex flex-col items-center gap-1 p-2 w-24 rounded-lg hover:bg-white/10 cursor-pointer group" onClick={onClick}>
+                <img src={img} className="w-12 h-12 transition-transform group-hover:scale-105" />
+                <span className="text-white text-[10px] text-center" style={{textShadow: '0 1px 2px rgba(0,0,0,0.8)'}}>{label}</span>
+            </div>
+        );
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
